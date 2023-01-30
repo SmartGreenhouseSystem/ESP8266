@@ -8,23 +8,19 @@ This is made for the WeMos copy of the ESP8266 chip which acts as a NodeMCU 1 ES
 
 ## Setup
 
-### System requirements
-
-It is required that there is some form of python runtime installed on the running system for configuration explained later in the README.
-
 ### IDE
 
 This application is mostly meant for be used with VScode with the [PlatformIO IDE extension](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide). Just installing that extension and opening this project via it should be sufficient.
 
 ### Variables
 
-To keep the variables such as the Wifi name and password hidden, environment variables which are put as build flags are used. This is made possible via the `env-extra.py` script which appends the build flags into the `platformio.ini` file at build time. 
+To keep the variables such as the Wifi name and password hidden, a hidden `.config.h` file in the root of the project is used to define constant variables.
 
-To set them up one needs to make the `.env` file in the root of the project.
+#### `.config.h` file example
 
-#### `.env` file example
-
-```
-WIFI_SSID="My_wifi_name"
-WIFI_PASSWORD="MySooperAweshomeP@ssword"
+```c
+#define WIFI_SSID           "My wifi ssid"
+#define WIFI_PASSWORD       "MyWifiP@ssword"
+#define SCADA_SERVER        "ws://192.168.1.130:3000/cable"
+#define SCADA_SERVER_ORIGIN "http://localhost:3000"
 ```
