@@ -3,7 +3,7 @@
 
 // Using a direct call will give syntax issues while this doesn't
 
-// Why does it work work with a double defined and not a single define we will never know...
+// Why does it work with a double definition and not a single one we will never know...
 #define XENV(x) #x
 #define ENV(x) XENV(x)
 // ...but it works

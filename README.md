@@ -18,7 +18,7 @@ This application is mostly meant for be used with VScode with the [PlatformIO ID
 
 ### Variables
 
-To keep the variables such as the Wifi name and password hidden environment variables which are put as build flags are used. This is made possible via the `env-extra.py` script which appends the build flags into the `platformio.ini` file at build time. 
+To keep the variables such as the Wifi name and password hidden, environment variables which are put as build flags are used. This is made possible via the `env-extra.py` script which appends the build flags into the `platformio.ini` file at build time. 
 
 To set them up one needs to make the `.env` file in the root of the project.
 
