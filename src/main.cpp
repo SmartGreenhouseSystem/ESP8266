@@ -1,8 +1,9 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
+#include <Environment.h>
 
-#define XSTR(x) #x
-#define STR(x) XSTR(x)
+const char* ssid = ENV(WIFI_SSID);
+const char* password = ENV(WIFI_PASSWORD);
 
 void setup()
 {
@@ -10,9 +11,9 @@ void setup()
 	delay(100);
 
 	Serial.print("Connecting to ");
-	Serial.println(STR(WIFI_SSID));
+	Serial.println(ssid);
 
-	WiFi.begin(STR(WIFI_SSID), STR(WIFI_PASSWORD));
+	WiFi.begin(ssid, password);
 	WiFi.softAPdisconnect(true);
 
 	while (WiFi.status() != WL_CONNECTED)
