@@ -23,9 +23,9 @@ void setup()
 		Serial.print(".");
 	}
 
-    Serial.println("");
-    Serial.print("WiFi: connected as IPv4: ");
-    Serial.println(WiFi.localIP());
+	Serial.println("");
+	Serial.print("WiFi: connected as IPv4: ");
+	Serial.println(WiFi.localIP());
 
 	websocket.connect();
 	websocket.subscribe("MicrocontrollerChannel", "1");
