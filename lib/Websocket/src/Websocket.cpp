@@ -25,7 +25,7 @@ void Websocket::disconnect() {
 
 void Websocket::send(const std::string &message) {
     Serial.print("WS: Send: ");
-    Serial.println(websockets::internals::fromInternalString(message.c_str()));
+    Serial.println(message.c_str());
     client.send(message.c_str());
 }
 
