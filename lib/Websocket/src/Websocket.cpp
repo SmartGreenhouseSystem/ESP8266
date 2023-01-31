@@ -1,5 +1,6 @@
 #include "Websocket.hpp"
 #include <ArduinoWebsockets.h>
+#include <ArduinoJson.h>
 #include <iostream>
 
 Websocket::Websocket(const std::string serverUrl, const std::string serverOrigin) : socketServerUrl(serverUrl) {
@@ -34,8 +35,25 @@ void Websocket::subscribe(const std::string &channelName, const std::string &id)
 }
 
 void Websocket::consumeMessage(const websockets::WebsocketsMessage &message) {
-    Serial.print("WS: Receive: ");
+    Serial.print("WS: Receive raw data: ");
     Serial.println(message.data());
+
+    // The exact value was predetermined via https://arduinojson.org/v6/assistant/
+    
+    StaticJsonDocument<128> doc;
+    DeserializationError error = deserializeJson(doc, message.data());
+
+    if (error) {
+        Serial.print(F("WS: JSON deserialization failed: "));
+        Serial.println(error.f_str());
+        return;
+    }
+
+    Serial.print("WS: Receive JSON type: ");
+
+    const char* type = doc["type"];
+
+    Serial.println(type);
 }
 
 void Websocket::consumeEvent(const websockets::WebsocketsEvent &event) {
