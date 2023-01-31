@@ -15,8 +15,8 @@ Websocket::Websocket(const std::string serverUrl, const std::string serverOrigin
     });
 };
 
-void Websocket::connect() {
-    client.connect(socketServerUrl.c_str());
+bool Websocket::connect() {
+    return client.connect(socketServerUrl.c_str());
 }
 
 void Websocket::disconnect() {
