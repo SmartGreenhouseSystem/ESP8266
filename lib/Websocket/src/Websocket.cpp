@@ -1,5 +1,6 @@
 #include "Websocket.hpp"
 #include <ArduinoWebsockets.h>
+#include <StringHelper.hpp>
 #include <iostream>
 
 Websocket::Websocket(const std::string serverUrl, const std::string serverOrigin) : socketServerUrl(serverUrl) {
@@ -18,9 +19,19 @@ void Websocket::connect() {
     client.connect(socketServerUrl.c_str());
 }
 
+void Websocket::disconnect() {
+    client.close();
+}
+
+void Websocket::send(const std::string &message) {
+    Serial.print("WS: Send: ");
+    Serial.println(humanize(message).c_str());
+    client.send(message.c_str());
+}
+
 void Websocket::subscribe(const std::string &channelName, const std::string &id) {
     std::string message = "{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"" + channelName + "\\\",\\\"mcid\\\":\\\"" + id + "\\\"}\"}";
-    client.send(message.c_str());
+    send(message);
 }
 
 void Websocket::consumeMessage(const websockets::WebsocketsMessage &message) {

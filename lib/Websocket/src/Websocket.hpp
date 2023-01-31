@@ -15,8 +15,8 @@ class Websocket {
         void connect();
         void subscribe(const std::string &channelName, const std::string &id);
         void disconnect();
-        void onDisconnect(void (*callback));
         void poll();
+        void send(const std::string &message);
 };
 
 #endif
