@@ -39,7 +39,8 @@ void Websocket::saveReading(const std::string &readingName, const float &value) 
     std::string message = 
         "{\"command\": \"message\", \"identifier\": \"" + identifier +
         "\",  \"data\": \"{\\\"action\\\":\\\"save\\\",\\\"name\\\":\\\"" + readingName +
-        "\\\",\\\"value\\\":" + std::to_string(value) +",\\\"recorded_at\\\":1675168911}\"}";
+        "\\\",\\\"value\\\":" + std::to_string(value) +
+        ",\\\"recorded_at\\\":" + std::to_string(serverTime + (millis() - systemTime) / 1000) + "}\"}";
     send(message);
 }
 
@@ -61,6 +62,11 @@ void Websocket::consumeMessage(const websockets::WebsocketsMessage &message) {
     Serial.print("WS: Receive JSON type: ");
 
     const char* type = doc["type"];
+
+    if (strcmp(type, "ping") == 0) {
+        serverTime = doc["message"];
+        systemTime = millis();
+    }
 
     Serial.println(type);
 }

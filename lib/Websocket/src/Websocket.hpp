@@ -8,6 +8,7 @@ class Websocket {
     private:
         std::string socketServerUrl, identifier;
         websockets::WebsocketsClient client;
+        long serverTime, systemTime;
         /**
          * Event handler for any incoming messages.
          * @param message a struct containing the information about the message.
