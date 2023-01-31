@@ -6,8 +6,7 @@
 
 Websocket websocket(SCADA_SERVER, SCADA_SERVER_ORIGIN);
 
-void setup()
-{
+void setup() {
 	Serial.begin(115200);
 	delay(100);
 
@@ -17,8 +16,7 @@ void setup()
 	WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 	WiFi.softAPdisconnect(true);
 
-	while (WiFi.status() != WL_CONNECTED)
-	{
+	while (WiFi.status() != WL_CONNECTED) {
 		delay(500);
 		Serial.print(".");
 	}
