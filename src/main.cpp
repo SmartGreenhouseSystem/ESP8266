@@ -27,6 +27,7 @@ void setup() {
 
 	websocket.connect();
 	websocket.subscribe("MicrocontrollerChannel", "1");
+	websocket.saveReading("Temp 1", 22.01);
 }
 
 void loop() {

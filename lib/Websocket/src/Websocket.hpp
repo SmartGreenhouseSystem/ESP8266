@@ -6,7 +6,7 @@
 
 class Websocket {
     private:
-        std::string socketServerUrl;
+        std::string socketServerUrl, identifier;
         websockets::WebsocketsClient client;
         /**
          * Event handler for any incoming messages.
@@ -40,6 +40,12 @@ class Websocket {
          * @return a boolean to see whether it is connected or not.
         */
         void subscribe(const std::string &channelName, const std::string &id);
+        /**
+         * Saves measurements from sensors on the websocket server.
+         * @param readingName id of sensor.
+         * @param value numeric value of the reading.
+        */
+        void saveReading(const std::string &readingName, const float &value);
         /**
          * Disconnect from the socket connection.
         */
