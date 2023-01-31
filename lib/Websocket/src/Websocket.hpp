@@ -37,6 +37,7 @@ class Websocket {
          * Connect to the websocket channel. It is expected that the socket is already connected.
          * @param channelName the name of the channel which the socket should connect to. Example: `MicrocontrollerChannel`.
          * @param id the mcid of the device connecting.
+         * @return a boolean to see whether it is connected or not.
         */
         void subscribe(const std::string &channelName, const std::string &id);
         /**
