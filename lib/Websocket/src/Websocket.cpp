@@ -30,7 +30,8 @@ void Websocket::send(const std::string &message) {
 }
 
 void Websocket::subscribe(const std::string &channelName, const std::string &id) {
-    std::string message = "{\"command\":\"subscribe\",\"identifier\":\"{\\\"channel\\\":\\\"" + channelName + "\\\",\\\"mcid\\\":\\\"" + id + "\\\"}\"}";
+    identifier = "{\\\"channel\\\":\\\"" + channelName + "\\\",\\\"mcid\\\":\\\"" + id + "\\\"}";
+    std::string message = "{\"command\":\"subscribe\",\"identifier\":\"" + identifier + "\"}";
     send(message);
 }
 

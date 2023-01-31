@@ -6,7 +6,7 @@
 
 class Websocket {
     private:
-        std::string socketServerUrl;
+        std::string socketServerUrl, identifier;
         websockets::WebsocketsClient client;
         /**
          * Event handler for any incoming messages.
