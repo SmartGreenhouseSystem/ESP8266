@@ -51,7 +51,7 @@ void loop() {
 		std::string buffer;
 		std::istringstream stream(reading);   
 
-    	while (std::getline(stream, buffer, '|')) {
+		while (std::getline(stream, buffer, '|')) {
 			strings.push_back(buffer);
 			Serial.println(buffer.c_str());
 		}
