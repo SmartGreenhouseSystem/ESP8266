@@ -1,6 +1,5 @@
 #include "Websocket.hpp"
 #include <ArduinoWebsockets.h>
-#include <StringHelper.hpp>
 #include <iostream>
 
 Websocket::Websocket(const std::string serverUrl, const std::string serverOrigin) : socketServerUrl(serverUrl) {
@@ -25,7 +24,7 @@ void Websocket::disconnect() {
 
 void Websocket::send(const std::string &message) {
     Serial.print("WS: Send: ");
-    Serial.println(humanize(message).c_str());
+    Serial.println(websockets::internals::fromInternalString(message.c_str()));
     client.send(message.c_str());
 }
 
