@@ -55,6 +55,6 @@ void loop() {
 			Serial.println(buffer.c_str());
 		}
 		
-		websocket.saveReading(strings[0], std::stof(strings[1].c_str()));
+		// websocket.saveReading(strings[0], std::stof(strings[1].c_str()));
 	}
 }
