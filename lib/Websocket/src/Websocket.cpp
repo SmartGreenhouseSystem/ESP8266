@@ -38,9 +38,9 @@ void Websocket::subscribe(const std::string &channelName, const std::string &id)
 void Websocket::saveReading(const std::string &readingName, const float &value) {
     std::string message = 
         "{\"command\": \"message\", \"identifier\": \"" + identifier
-        + "\",  \"data\": \"{\\\"action\\\":\\\"save\\\",\\\"name\\\":\\\"" + readingName
-        + "\\\",\\\"value\\\":" + std::to_string(value) + ",\\\"recorded_at\\\":"
-        + std::to_string(serverTime + (millis() - systemTime) / 1000) + "}\"}";
+            + "\",  \"data\": \"{\\\"action\\\":\\\"save\\\",\\\"name\\\":\\\"" + readingName
+            + "\\\",\\\"value\\\":" + std::to_string(value) + ",\\\"recorded_at\\\":"
+            + std::to_string(serverTime + (millis() - systemTime) / 1000) + "}\"}";
     send(message);
 }
 
@@ -63,12 +63,19 @@ void Websocket::consumeMessage(const websockets::WebsocketsMessage &message) {
 
     const char* type = doc["type"];
 
+    Serial.println(type);
+
     if (strcmp(type, "ping") == 0) {
         serverTime = doc["message"];
         systemTime = millis();
-    }
+        
+        std::string rssiMessage = 
+            "{\"command\": \"message\", \"identifier\": \"" + identifier
+                + "\",  \"data\": \"{\\\"action\\\":\\\"update\\\",\\\"RSSI\\\":\\\""
+                + std::to_string(WiFi.RSSI()) + "\\\"}\"}";
 
-    Serial.println(type);
+        send(rssiMessage);
+    }    
 }
 
 void Websocket::consumeEvent(const websockets::WebsocketsEvent &event) {
