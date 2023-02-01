@@ -37,7 +37,7 @@ void setup() {
 	Serial.println(WiFi.localIP());
 
 	websocket.connect();
-	websocket.subscribe("MicrocontrollerChannel", "1");
+	websocket.subscribe("MicrocontrollerChannel", CONTROLLER_ID, CONTROLLER_NAME);
 }
 
 void loop() {

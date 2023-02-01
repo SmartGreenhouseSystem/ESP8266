@@ -29,8 +29,8 @@ void Websocket::send(const std::string &message) {
     client.send(message.c_str());
 }
 
-void Websocket::subscribe(const std::string &channelName, const std::string &id) {
-    identifier = "{\\\"channel\\\":\\\"" + channelName + "\\\",\\\"mcid\\\":\\\"" + id + "\\\"}";
+void Websocket::subscribe(const std::string &channelName, const std::string &id, const std::string &name) {
+    identifier = "{\\\"channel\\\":\\\"" + channelName + "\\\",\\\"mcid\\\":\\\"" + id + "\\\",\\\"name\\\":\\\"" + name + "\\\"}";
     std::string message = "{\"command\":\"subscribe\",\"identifier\":\"" + identifier + "\"}";
     send(message);
 }
@@ -50,7 +50,7 @@ void Websocket::consumeMessage(const websockets::WebsocketsMessage &message) {
 
     // The exact value was predetermined via https://arduinojson.org/v6/assistant/
     
-    StaticJsonDocument<128> doc;
+    StaticJsonDocument<256> doc;
     DeserializationError error = deserializeJson(doc, message.data());
 
     if (error) {
