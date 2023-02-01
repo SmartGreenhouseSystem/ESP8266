@@ -23,4 +23,6 @@ To keep the variables such as the Wifi name and password hidden, a hidden `.conf
 #define WIFI_PASSWORD       "MyWifiP@ssword"
 #define SCADA_SERVER        "ws://192.168.1.130:3000/cable"
 #define SCADA_SERVER_ORIGIN "http://localhost:3000"
+#define CONTROLLER_ID       "main_room"
+#define CONTROLLER_NAME     "A non unique display name"
 ```
