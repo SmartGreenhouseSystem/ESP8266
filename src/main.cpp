@@ -9,6 +9,7 @@
 #define ARDUINO_RX D2
 #define ARDUINO_TX D3
 
+
 Websocket websocket(SCADA_SERVER, SCADA_SERVER_ORIGIN);
 
 SoftwareSerial ArduinoSerial(ARDUINO_RX, ARDUINO_TX);
@@ -16,6 +17,7 @@ SoftwareSerial ArduinoSerial(ARDUINO_RX, ARDUINO_TX);
 void setup() {
 	pinMode(ARDUINO_RX, INPUT);
 	pinMode(ARDUINO_TX, OUTPUT);
+	pinMode(D0, OUTPUT);
 
 	Serial.begin(115200);
 	ArduinoSerial.begin(9600);

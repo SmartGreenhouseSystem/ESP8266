@@ -3,6 +3,16 @@
 #include <ArduinoJson.h>
 #include <iostream>
 
+union FLAGS {
+    int flags;
+    int flag0() { return !!(flags & 0b1); }
+    int flag1() { return !!(flags & 0b10); }
+    int flag2() { return !!(flags & 0b100); }
+    int flag3() { return !!(flags & 0b1000); }
+    int flag4() { return !!(flags & 0b10000); }
+};
+
+
 Websocket::Websocket(const std::string serverUrl, const std::string serverOrigin) : socketServerUrl(serverUrl) {
     client.addHeader("Origin", serverOrigin.c_str());
 
@@ -61,20 +71,40 @@ void Websocket::consumeMessage(const websockets::WebsocketsMessage &message) {
 
     Serial.print("WS: Receive JSON type: ");
 
-    const char* type = doc["type"];
+    if(doc.containsKey("type")) {
+        const char* type = doc["type"];
+        Serial.println(type);
+        // This is a base-server message
+        if (strcmp(type, "ping") == 0) {
+            serverTime = doc["message"];
+            systemTime = millis();
+            
+            std::string rssiMessage = 
+                "{\"command\": \"message\", \"identifier\": \"" + identifier
+                    + "\",  \"data\": \"{\\\"action\\\":\\\"update\\\",\\\"RSSI\\\":\\\""
+                    + std::to_string(WiFi.RSSI()) + "\\\"}\"}";
+
+            send(rssiMessage);
+        }
+
+        return;
+    }
+
+    Serial.print("User message: ");
+
+    JsonObject object = doc["message"];
+    const char * type = (const char *) object["type"]; 
 
     Serial.println(type);
 
-    if (strcmp(type, "ping") == 0) {
-        serverTime = doc["message"];
-        systemTime = millis();
+    if (strcmp(type, "control") == 0) {
+        FLAGS flags;
+        flags.flags = (int)object["instruction"];
+        Serial.println((int)object["instruction"]);
+        Serial.println(flags.flags);
+        Serial.println(flags.flag0());
         
-        std::string rssiMessage = 
-            "{\"command\": \"message\", \"identifier\": \"" + identifier
-                + "\",  \"data\": \"{\\\"action\\\":\\\"update\\\",\\\"RSSI\\\":\\\""
-                + std::to_string(WiFi.RSSI()) + "\\\"}\"}";
-
-        send(rssiMessage);
+        digitalWrite(D0, flags.flag0());
     }    
 }
 
