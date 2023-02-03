@@ -35,11 +35,12 @@ void Websocket::subscribe(const std::string &channelName, const std::string &id,
     send(message);
 }
 
-void Websocket::saveReading(const std::string &readingName, const float &value) {
+void Websocket::saveReading(const std::string &readingName, const std::string &readingType, const std::string &unit, const float &value) {
     std::string message = 
         "{\"command\": \"message\", \"identifier\": \"" + identifier
             + "\",  \"data\": \"{\\\"action\\\":\\\"save\\\",\\\"name\\\":\\\"" + readingName
-            + "\\\",\\\"value\\\":" + std::to_string(value) + ",\\\"recorded_at\\\":"
+            + "\\\",\\\"value\\\":" + std::to_string(value) + ",\\\"measurement_type\\\":\\\""
+            + readingType + "\\\",\\\"unit\\\":\\\"" + unit + "\\\",\\\"recorded_at\\\":"
             + std::to_string(serverTime + (millis() - systemTime) / 1000) + "}\"}";
     send(message);
 }

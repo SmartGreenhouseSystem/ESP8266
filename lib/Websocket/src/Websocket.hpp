@@ -44,10 +44,12 @@ class Websocket {
         void subscribe(const std::string &channelName, const std::string &id, const std::string &name);
         /**
          * Saves measurements from sensors on the websocket server.
-         * @param readingName id of sensor.
+         * @param readingName id of sensor, e.g. Main room heater.
+         * @param readingType the type of the reading, e.g. Temperature
+         * @param unit the unit of the reading, e.g. ℃
          * @param value numeric value of the reading.
         */
-        void saveReading(const std::string &readingName, const float &value);
+        void saveReading(const std::string &readingName, const std::string &readingType, const std::string &unit, const float &value);
         /**
          * Disconnect from the socket connection.
         */
