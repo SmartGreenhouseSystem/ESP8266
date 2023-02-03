@@ -105,7 +105,8 @@ void Websocket::consumeMessage(const websockets::WebsocketsMessage &message) {
         Serial.println(flags.flag0());
         
         digitalWrite(D0, flags.flag0());
-    }    
+    }
+
 }
 
 void Websocket::consumeEvent(const websockets::WebsocketsEvent &event) {

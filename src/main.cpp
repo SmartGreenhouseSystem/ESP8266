@@ -13,6 +13,21 @@
 Websocket websocket(SCADA_SERVER, SCADA_SERVER_ORIGIN);
 
 SoftwareSerial ArduinoSerial(ARDUINO_RX, ARDUINO_TX);
+std::vector<std::string> strings;
+std::vector<std::string> measurements;
+std::string data;
+
+std::vector<std::string> getStrings(std::string data, char symbol){
+	std::vector<std::string> strings;
+	std::string buffer;
+	std::istringstream stream(data);   
+
+	while (std::getline(stream, buffer, symbol)) {
+		strings.push_back(buffer);
+	}
+
+	return strings;
+}
 
 void setup() {
 	pinMode(ARDUINO_RX, INPUT);
@@ -46,17 +61,18 @@ void loop() {
 	websocket.poll();
 
 	if(ArduinoSerial.available() > 0) {
-		std::string reading = ArduinoSerial.readString().c_str(); 
-
-		std::vector<std::string> strings;
-		std::string buffer;
-		std::istringstream stream(reading);   
-
-		while (std::getline(stream, buffer, '|')) {
-			strings.push_back(buffer);
-			Serial.println(buffer.c_str());
-		}
 		
+		data = ArduinoSerial.readString().c_str();
+		Serial.println(data.c_str());
+
+		measurements.clear();
+		measurements = getStrings(data, '$');
+		for (int i = 0; i < measurements.size(); i++) {
+
+		strings.clear();
+		strings = getStrings(measurements[i], '|');
 		websocket.saveReading(strings[0], std::stof(strings[1].c_str()));
+		}
 	}
+
 }
